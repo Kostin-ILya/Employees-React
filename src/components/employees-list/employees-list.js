@@ -4,7 +4,9 @@ import './employees-list.css'
 
 const EmployeesList = ({ data }) => {
   const elements = data.map((item) => {
-    return <EmployeesListItem {...item} />
+    const { id, ...props } = item
+
+    return <EmployeesListItem key={id} {...props} />
     /* return <EmployeesListItem name={item.name} salary={item.salary} /> 
     идентичные записи*/
   })
