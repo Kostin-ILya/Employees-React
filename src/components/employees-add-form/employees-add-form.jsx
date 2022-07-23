@@ -1,4 +1,5 @@
 import { Component } from 'react'
+
 import './employees-add-form.css'
 
 class EmployeesAddForm extends Component {
@@ -10,9 +11,22 @@ class EmployeesAddForm extends Component {
     }
   }
 
-  onChangeInputValue = (e) => {
+  onInputValueChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+    })
+  }
+
+  onSubmitForm = (e) => {
+    e.preventDefault()
+
+    const { name, salary } = this.state
+    const { onAdd } = this.props
+    onAdd(name, salary)
+
+    this.setState({
+      name: '',
+      salary: '',
     })
   }
 
@@ -22,14 +36,14 @@ class EmployeesAddForm extends Component {
     return (
       <div className="app-add-form">
         <h3>Добавьте нового сотрудника</h3>
-        <form className="add-form d-flex">
+        <form className="add-form d-flex" onSubmit={this.onSubmitForm}>
           <input
             type="text"
             name="name"
             value={name}
             className="form-control new-post-label"
             placeholder="Как его зовут?"
-            onChange={this.onChangeInputValue}
+            onChange={this.onInputValueChange}
           />
           <input
             type="number"
@@ -37,7 +51,7 @@ class EmployeesAddForm extends Component {
             value={salary}
             className="form-control new-post-label"
             placeholder="З/П в $?"
-            onChange={this.onChangeInputValue}
+            onChange={this.onInputValueChange}
           />
 
           <button type="submit" className="btn btn-outline-light">
