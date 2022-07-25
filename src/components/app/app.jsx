@@ -18,25 +18,50 @@ class App extends Component {
           name: 'John Smith',
           salary: 1000,
           increase: false,
-          star: false,
+          rise: false,
           id: 1,
         },
         {
           name: 'Alex Black',
           salary: 1750,
           increase: false,
-          star: false,
+          rise: false,
           id: 2,
         },
         {
           name: 'Samantha Fox',
           salary: 3000,
           increase: true,
-          star: true,
+          rise: true,
           id: 3,
         },
       ],
     }
+  }
+
+  onToggleProp = (id, prop) => {
+    this.setState(({ data }) => ({
+      data: data.map((item) => {
+        if (item.id === id) {
+          return { ...item, [prop]: !item[prop] }
+        }
+        return item
+      }),
+    }))
+  }
+
+  addItem = (name, salary) => {
+    const newItem = {
+      name,
+      salary,
+      increase: false,
+      rise: false,
+      id: uuidv4(),
+    }
+
+    this.setState((prevState) => ({
+      data: [...prevState.data, newItem],
+    }))
   }
 
   deleteItem = (id) => {
@@ -46,32 +71,51 @@ class App extends Component {
     })
   }
 
-  addItem = (name, salary) => {
-    const newItem = {
-      name,
-      salary,
-      increase: false,
-      star: false,
-      id: uuidv4(),
-    }
+  // onToggleIncrease = (id) => {
+  //   this.setState(({ data }) => ({
+  //     data: data.map((item) => {
+  //       if (item.id === id) {
+  //         return { ...item, increase: !item.increase }
+  //       }
+  //       return item
+  //     }),
+  //   }))
+  // }
 
-    this.setState((prevState) => ({
-      data: [...prevState.data, newItem],
-    }))
-  }
+  // onToggleRise = (id) => {
+  //   this.setState(({ data }) => ({
+  //     data: data.map((item) => {
+  //       if (item.id === id) {
+  //         return { ...item, rise: !item.rise }
+  //       }
+  //       return item
+  //     }),
+  //   }))
+  // }
 
   render() {
     const { data } = this.state
+    const increaseQuantity = data.filter(
+      (item) => item.increase === true
+    ).length
+
     return (
       <div className="app">
-        <AppInfo />
+        <AppInfo
+          itemsQuantity={data.length}
+          increaseQuantity={increaseQuantity}
+        />
 
         <div className="search-panel">
           <SearchPanel />
           <AppFilter />
         </div>
 
-        <EmployeesList data={data} onDelete={this.deleteItem} />
+        <EmployeesList
+          data={data}
+          deleteItem={this.deleteItem}
+          onToggleProp={this.onToggleProp}
+        />
         <EmployeesAddForm onAdd={this.addItem} />
       </div>
     )

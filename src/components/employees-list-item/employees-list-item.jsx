@@ -1,72 +1,56 @@
-import { Component } from 'react'
 import clsx from 'clsx'
 
 import './employees-list-item.css'
 
-class EmployeesListItem extends Component {
-  constructor(props) {
-    super(props)
+function EmployeesListItem({
+  name,
+  salary,
+  increase,
+  rise,
+  deleteItem,
+  onToggleProp,
+}) {
+  const classNames = clsx('list-group-item d-flex justify-content-between', {
+    increase,
+    like: rise,
+  })
 
-    const { increase, star } = this.props
-    this.state = {
-      increase,
-      star,
-    }
-  }
+  return (
+    <li className={classNames}>
+      <span
+        data-toggle="rise"
+        className="list-group-item-label"
+        onClick={onToggleProp}
+      >
+        {name}
+      </span>
+      <input
+        type="text"
+        className="list-group-item-input"
+        defaultValue={`${salary}$`}
+      />
+      <div className="d-flex justify-content-center align-items-center">
+        <button
+          type="button"
+          data-toggle="increase"
+          className="btn-cookie btn-sm"
+          onClick={onToggleProp}
+        >
+          {/*  <i className="fas fa-cookie" /> */}
+          <i className="fa fa-dollar-sign" />
+        </button>
 
-  onIncrease = () => {
-    this.setState(({ increase }) => ({
-      increase: !increase,
-    }))
-  }
-
-  onRise = () => {
-    this.setState(({ star }) => ({
-      star: !star,
-    }))
-  }
-
-  render() {
-    const { name, salary, onDelete } = this.props
-    const { increase, star } = this.state
-
-    const classNames = clsx('list-group-item d-flex justify-content-between', {
-      increase,
-      like: star,
-    })
-
-    return (
-      <li className={classNames}>
-        <span className="list-group-item-label" onClick={this.onRise}>
-          {name}
-        </span>
-        <input
-          type="text"
-          className="list-group-item-input"
-          defaultValue={`${salary}$`}
-        />
-        <div className="d-flex justify-content-center align-items-center">
-          <button
-            type="button"
-            className="btn-cookie btn-sm"
-            onClick={this.onIncrease}
-          >
-            {/*  <i className="fas fa-cookie" /> */}
-            <i className="fa fa-angles-up" />
-          </button>
-
-          <button
-            type="button"
-            className="btn-trash btn-sm "
-            onClick={onDelete}
-          >
-            <i className="fas fa-trash" />
-          </button>
-          <i className="fas fa-star" />
-        </div>
-      </li>
-    )
-  }
+        <button
+          type="button"
+          className="btn-trash btn-sm "
+          onClick={deleteItem}
+        >
+          <i className="fas fa-trash" />
+        </button>
+        <i className="fas fa-star" />
+      </div>
+    </li>
+  )
 }
 
 export default EmployeesListItem
