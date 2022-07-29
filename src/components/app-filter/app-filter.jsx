@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import clsx from 'clsx'
 
 import './app-filter.css'
 
@@ -17,9 +18,12 @@ class AppFilter extends Component {
 
     const btns = btnData.map(({ name, label }) => {
       const active = this.props.filter === name
-      const classNames = active ? 'btn btn-light' : 'btn btn-outline-light'
+      const classes = clsx('btn', {
+        'btn-light': active,
+        'btn-outline-light': !active,
+      })
       return (
-        <button type="button" key={uuidv4()} name={name} className={classNames}>
+        <button type="button" key={uuidv4()} name={name} className={classes}>
           {label}
         </button>
       )

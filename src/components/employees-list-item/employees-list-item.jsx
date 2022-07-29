@@ -9,6 +9,7 @@ function EmployeesListItem({
   rise,
   deleteItem,
   onToggleProp,
+  onChangeSalary,
 }) {
   const classNames = clsx('list-group-item d-flex justify-content-between', {
     increase,
@@ -26,6 +27,7 @@ function EmployeesListItem({
       </span>
       <input
         type="text"
+        onChange={onChangeSalary}
         className="list-group-item-input"
         defaultValue={`${salary}$`}
       />
