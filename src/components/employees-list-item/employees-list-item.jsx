@@ -16,20 +16,31 @@ function EmployeesListItem({
     like: rise,
   })
 
+  const spaceHandler = (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault()
+
+      onToggleProp(e)
+    }
+  }
+
   return (
     <li className={classNames}>
       <span
         data-toggle="rise"
+        tabIndex={0}
+        role="button"
         className="list-group-item-label"
         onClick={onToggleProp}
+        onKeyDown={spaceHandler}
       >
         {name}
       </span>
       <input
         type="text"
-        onChange={onChangeSalary}
         className="list-group-item-input"
         defaultValue={`${salary}$`}
+        onChange={onChangeSalary}
       />
       <div className="d-flex justify-content-center align-items-center">
         <button

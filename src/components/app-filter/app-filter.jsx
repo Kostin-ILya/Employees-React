@@ -30,7 +30,11 @@ class AppFilter extends Component {
     })
 
     return (
-      <div className="btn-group" onClick={this.onFilterItems}>
+      <div
+        className="btn-group"
+        onClick={this.onFilterItems}
+        role="presentation"
+      >
         {/* <button type="button" name="all" className="btn btn-light">
           Все сотрудники
         </button>
