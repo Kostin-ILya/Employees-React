@@ -1,8 +1,6 @@
 import './app-info.css'
 
-function AppInfo(props) {
-  const { itemsQuantity, increaseQuantity } = props
-
+const AppInfo = ({ itemsQuantity, increaseQuantity }) => {
   return (
     <div className="app-info">
       <h1>Учет сотрудников в компании Microsoft</h1>

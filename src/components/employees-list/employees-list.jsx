@@ -2,7 +2,12 @@ import EmployeesListItem from '../employees-list-item/employees-list-item'
 
 import './employees-list.css'
 
-function EmployeesList({ data, onDeleteItem, onToggleProp, onChangeSalary }) {
+const EmployeesList = ({
+  data,
+  onDeleteItem,
+  onToggleProp,
+  onChangeSalary,
+}) => {
   const elements = data.map((item) => {
     const { id, ...props } = item
 

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import './employees-list-item.css'
 
-function EmployeesListItem({
+const EmployeesListItem = ({
   name,
   salary,
   increase,
@@ -10,7 +10,7 @@ function EmployeesListItem({
   deleteItem,
   onToggleProp,
   onChangeSalary,
-}) {
+}) => {
   const classNames = clsx('list-group-item d-flex justify-content-between', {
     increase,
     like: rise,
@@ -29,7 +29,6 @@ function EmployeesListItem({
       <span
         data-toggle="rise"
         tabIndex={0}
-        role="button"
         className="list-group-item-label"
         onClick={onToggleProp}
         onKeyDown={spaceHandler}
@@ -49,7 +48,6 @@ function EmployeesListItem({
           className="btn-cookie btn-sm"
           onClick={onToggleProp}
         >
-          {/*  <i className="fas fa-cookie" /> */}
           <i className="fa fa-dollar-sign" />
         </button>
 
@@ -67,36 +65,3 @@ function EmployeesListItem({
 }
 
 export default EmployeesListItem
-
-// const classNames = objstr({
-//   'list-group-item d-flex justify-content-between': true,
-//   'increase': increase,
-//   'like': star,
-// })
-
-// Работа с классами без библиотек
-// const classNames =
-//   increase && star
-//     ? 'list-group-item d-flex justify-content-between increase like'
-//     : increase
-//     ? 'list-group-item d-flex justify-content-between increase'
-//     : star
-//     ? 'list-group-item d-flex justify-content-between like'
-//     : 'list-group-item d-flex justify-content-between '
-
-/*   let classNames
-    if (increase && star) {
-      classNames =
-        'list-group-item d-flex justify-content-between increase like'
-    } else if (increase) {
-      classNames = 'list-group-item d-flex justify-content-between increase'
-    } else if (star) {
-      classNames = 'list-group-item d-flex justify-content-between like'
-    } else {
-      classNames = 'list-group-item d-flex justify-content-between '
-    } */
-
-// let classes = 'list-group-item d-flex justify-content-between'
-// if (increase) {
-//   classes += ' increase'
-// }

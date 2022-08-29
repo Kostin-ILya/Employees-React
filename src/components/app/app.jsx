@@ -1,5 +1,5 @@
-import { Component } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { useState } from 'react'
+import generateId from '../../services/services'
 
 import AppInfo from '../app-info/app-info'
 import SearchPanel from '../search-panel/search-panel'
@@ -9,8 +9,38 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form'
 
 import './app.css'
 
-class App extends Component {
-  static searchItem(dataArr, str) {
+const App = () => {
+  const [state, setState] = useState({
+    data: [
+      {
+        name: 'John Smith',
+        salary: 800,
+        increase: false,
+        rise: false,
+        id: generateId(),
+      },
+      {
+        name: 'Alex Black',
+        salary: 1750,
+        increase: false,
+        rise: false,
+        id: generateId(),
+      },
+      {
+        name: 'Samantha Fox',
+        salary: 3000,
+        increase: true,
+        rise: true,
+        id: generateId(),
+      },
+    ],
+    search: '',
+    filter: 'all',
+  })
+
+  const { data, search, filter } = state
+
+  const searchItem = (dataArr, str) => {
     if (str.length === 0) {
       return dataArr
     }
@@ -20,51 +50,21 @@ class App extends Component {
     )
   }
 
-  static filterItems(dataArr, filter) {
-    switch (filter) {
+  const filterItems = (dataArr, activeFilter) => {
+    switch (activeFilter) {
       case 'rised':
         return dataArr.filter((item) => item.rise)
       case 'more1000':
-        return dataArr.filter((item) => item.salary > 1500)
+        return dataArr.filter((item) => item.salary > 1000)
       default:
         return dataArr
     }
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      data: [
-        {
-          name: 'John Smith',
-          salary: 800,
-          increase: false,
-          rise: false,
-          id: 1,
-        },
-        {
-          name: 'Alex Black',
-          salary: 1750,
-          increase: false,
-          rise: false,
-          id: 2,
-        },
-        {
-          name: 'Samantha Fox',
-          salary: 3000,
-          increase: true,
-          rise: true,
-          id: 3,
-        },
-      ],
-      search: '',
-      filter: 'all',
-    }
-  }
-
-  onToggleProp = (id, prop) => {
-    this.setState(({ data }) => ({
-      data: data.map((item) => {
+  const onToggleProp = (id, prop) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: prevState.data.map((item) => {
         if (item.id === id) {
           return { ...item, [prop]: !item[prop] }
         }
@@ -73,9 +73,10 @@ class App extends Component {
     }))
   }
 
-  onChangeSalary = (id, value) => {
-    this.setState(({ data }) => ({
-      data: data.map((item) => {
+  const onChangeSalary = (id, value) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: prevState.data.map((item) => {
         if (item.id === id) {
           return { ...item, salary: +value.slice(0, -1) }
         }
@@ -84,61 +85,66 @@ class App extends Component {
     }))
   }
 
-  onAddItem = (name, salary) => {
+  const onAddItem = (name, salary) => {
     const newItem = {
       name,
       salary: +salary,
       increase: false,
       rise: false,
-      id: uuidv4(),
+      id: generateId(),
     }
 
-    this.setState((prevState) => ({
+    setState((prevState) => ({
+      ...prevState,
       data: [...prevState.data, newItem],
     }))
   }
 
-  onDeleteItem = (id) => {
-    this.setState(({ data }) => ({
-      data: data.filter((item) => item.id !== id),
+  const onDeleteItem = (id) => {
+    setState((prevState) => ({
+      ...prevState,
+      data: prevState.data.filter((item) => item.id !== id),
     }))
   }
 
-  onUpdateSearch = (search) => {
-    this.setState({ search })
+  const onUpdateSearch = (activeSearch) => {
+    setState((prevState) => ({
+      ...prevState,
+      search: activeSearch,
+    }))
   }
 
-  onUpdateFilter = (filter) => {
-    this.setState({ filter })
+  const onUpdateFilter = (activeFilter) => {
+    setState((prevState) => ({
+      ...prevState,
+      filter: activeFilter,
+    }))
   }
 
-  render() {
-    const { data, search, filter } = this.state
-    const increaseQuantity = data.filter((item) => item.increase).length
-    const visibleData = App.filterItems(App.searchItem(data, search), filter)
+  const increaseQuantity = data.filter((item) => item.increase).length
+  const visibleData = filterItems(searchItem(data, search), filter)
 
-    return (
-      <div className="app">
-        <AppInfo
-          itemsQuantity={data.length}
-          increaseQuantity={increaseQuantity}
-        />
+  return (
+    <div className="app">
+      <AppInfo
+        itemsQuantity={data.length}
+        increaseQuantity={increaseQuantity}
+      />
 
-        <div className="search-panel">
-          <SearchPanel search={search} onUpdateSearch={this.onUpdateSearch} />
-          <AppFilter filter={filter} onUpdateFilter={this.onUpdateFilter} />
-        </div>
-
-        <EmployeesList
-          data={visibleData}
-          onDeleteItem={this.onDeleteItem}
-          onToggleProp={this.onToggleProp}
-          onChangeSalary={this.onChangeSalary}
-        />
-        <EmployeesAddForm onAddItem={this.onAddItem} />
+      <div className="search-panel">
+        <SearchPanel search={search} onUpdateSearch={onUpdateSearch} />
+        <AppFilter filter={filter} onUpdateFilter={onUpdateFilter} />
       </div>
-    )
-  }
+
+      <EmployeesList
+        data={visibleData}
+        onDeleteItem={onDeleteItem}
+        onToggleProp={onToggleProp}
+        onChangeSalary={onChangeSalary}
+      />
+      <EmployeesAddForm onAddItem={onAddItem} />
+    </div>
+  )
 }
 
 export default App
