@@ -13,7 +13,7 @@ const EmployeesAddForm = ({ onAddItem }) => {
   const onSubmitForm = (e) => {
     e.preventDefault()
 
-    if (name.length > 3 && salary.length > 2) {
+    if (name.length > 2 && salary.length > 2) {
       onAddItem(name, salary)
     }
 

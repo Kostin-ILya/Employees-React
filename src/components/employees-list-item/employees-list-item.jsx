@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import clsx from 'clsx'
 
 import './employees-list-item.css'
@@ -11,6 +12,8 @@ const EmployeesListItem = ({
   onToggleProp,
   onChangeSalary,
 }) => {
+  const salaryRef = useRef(null)
+
   const classNames = clsx('list-group-item d-flex justify-content-between', {
     increase,
     like: rise,
@@ -36,10 +39,15 @@ const EmployeesListItem = ({
         {name}
       </span>
       <input
+        ref={salaryRef}
         type="text"
         className="list-group-item-input"
-        defaultValue={`${salary}$`}
+        value={salary + '$'}
         onChange={onChangeSalary}
+        onFocus={() => {
+          const end = salaryRef.current.value.length - 1
+          salaryRef.current.setSelectionRange(0, end)
+        }}
       />
       <div className="d-flex justify-content-center align-items-center">
         <button

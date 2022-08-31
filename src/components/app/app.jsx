@@ -7,83 +7,13 @@ import AppFilter from '../app-filter/app-filter'
 import EmployeesList from '../employees-list/employees-list'
 import EmployeesAddForm from '../employees-add-form/employees-add-form'
 
+import employeesData from '../../server/server'
 import './app.css'
 
 const App = () => {
-  const [state, setState] = useState({
-    data: [
-      {
-        name: 'John Smith',
-        salary: 800,
-        increase: false,
-        rise: false,
-        id: generateId(),
-      },
-      {
-        name: 'Alex Black',
-        salary: 1750,
-        increase: false,
-        rise: false,
-        id: generateId(),
-      },
-      {
-        name: 'Samantha Fox',
-        salary: 3000,
-        increase: true,
-        rise: true,
-        id: generateId(),
-      },
-    ],
-    search: '',
-    filter: 'all',
-  })
-
-  const { data, search, filter } = state
-
-  const searchItem = (dataArr, str) => {
-    if (str.length === 0) {
-      return dataArr
-    }
-
-    return dataArr.filter(
-      (item) => item.name.toLowerCase().indexOf(str.toLowerCase()) > -1
-    )
-  }
-
-  const filterItems = (dataArr, activeFilter) => {
-    switch (activeFilter) {
-      case 'rised':
-        return dataArr.filter((item) => item.rise)
-      case 'more1000':
-        return dataArr.filter((item) => item.salary > 1000)
-      default:
-        return dataArr
-    }
-  }
-
-  const onToggleProp = (id, prop) => {
-    setState((prevState) => ({
-      ...prevState,
-      data: prevState.data.map((item) => {
-        if (item.id === id) {
-          return { ...item, [prop]: !item[prop] }
-        }
-        return item
-      }),
-    }))
-  }
-
-  const onChangeSalary = (id, value) => {
-    setState((prevState) => ({
-      ...prevState,
-      data: prevState.data.map((item) => {
-        if (item.id === id) {
-          return { ...item, salary: +value.slice(0, -1) }
-        }
-        return item
-      }),
-    }))
-  }
+  const [data, setData] = useState(employeesData)
+  const [search, setSearch] = useState('')
+  const [filter, setFilter] = useState('all')
 
   const onAddItem = (name, salary) => {
     const newItem = {
@@ -94,31 +24,66 @@ const App = () => {
       id: generateId(),
     }
 
-    setState((prevState) => ({
-      ...prevState,
-      data: [...prevState.data, newItem],
-    }))
+    setData((prevData) => [...prevData, newItem])
   }
 
   const onDeleteItem = (id) => {
-    setState((prevState) => ({
-      ...prevState,
-      data: prevState.data.filter((item) => item.id !== id),
-    }))
+    setData((prevData) => prevData.filter((item) => item.id !== id))
+  }
+
+  const onToggleProp = (id, prop) => {
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          return { ...item, [prop]: !item[prop] }
+        }
+        return item
+      })
+    )
+  }
+
+  const onChangeSalary = (id, value) => {
+    setData((prevData) =>
+      prevData.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            salary: value.slice(0, -1).replace(/\D/gi, ''),
+          }
+        }
+        return item
+      })
+    )
   }
 
   const onUpdateSearch = (activeSearch) => {
-    setState((prevState) => ({
-      ...prevState,
-      search: activeSearch,
-    }))
+    setSearch(activeSearch)
   }
 
   const onUpdateFilter = (activeFilter) => {
-    setState((prevState) => ({
-      ...prevState,
-      filter: activeFilter,
-    }))
+    setFilter(activeFilter)
+  }
+
+  const searchItem = (dataArr, currentSearch) => {
+    if (currentSearch.length === 0) {
+      return dataArr
+    }
+
+    return dataArr.filter(
+      (item) =>
+        item.name.toLowerCase().indexOf(currentSearch.toLowerCase()) > -1
+    )
+  }
+
+  const filterItems = (dataArr, currentFilter) => {
+    switch (currentFilter) {
+      case 'rised':
+        return dataArr.filter((item) => item.rise)
+      case 'more1000':
+        return dataArr.filter((item) => item.salary > 1000)
+      default:
+        return dataArr
+    }
   }
 
   const increaseQuantity = data.filter((item) => item.increase).length
