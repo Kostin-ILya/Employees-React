@@ -1,18 +1,15 @@
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
+
 import clsx from 'clsx'
 
 import './employees-list-item.css'
+import SetDataContext from '../../context/context'
 
-const EmployeesListItem = ({
-  name,
-  salary,
-  increase,
-  rise,
-  deleteItem,
-  onToggleProp,
-  onChangeSalary,
-}) => {
-  const salaryRef = useRef(null)
+const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
+  const context = useContext(SetDataContext)
+  const { onDeleteItem, onToggleProp, onChangeSalary } = context
+
+  const salaryInputRef = useRef(null)
 
   const classNames = clsx('list-group-item d-flex justify-content-between', {
     increase,
@@ -23,7 +20,7 @@ const EmployeesListItem = ({
     if (e.code === 'Space') {
       e.preventDefault()
 
-      onToggleProp(e)
+      onToggleProp(id, e.currentTarget.dataset.toggle)
     }
   }
 
@@ -33,20 +30,24 @@ const EmployeesListItem = ({
         data-toggle="rise"
         tabIndex={0}
         className="list-group-item-label"
-        onClick={onToggleProp}
+        onClick={(e) => {
+          onToggleProp(id, e.currentTarget.dataset.toggle)
+        }}
         onKeyDown={spaceHandler}
       >
         {name}
       </span>
       <input
-        ref={salaryRef}
+        ref={salaryInputRef}
         type="text"
         className="list-group-item-input"
-        value={salary + '$'}
-        onChange={onChangeSalary}
+        value={`${salary}$`}
+        onChange={(e) => {
+          onChangeSalary(id, e.target.value)
+        }}
         onFocus={() => {
-          const end = salaryRef.current.value.length - 1
-          salaryRef.current.setSelectionRange(0, end)
+          const end = salaryInputRef.current.value.length - 1
+          salaryInputRef.current.setSelectionRange(0, end)
         }}
       />
       <div className="d-flex justify-content-center align-items-center">
@@ -54,7 +55,9 @@ const EmployeesListItem = ({
           type="button"
           data-toggle="increase"
           className="btn-cookie btn-sm"
-          onClick={onToggleProp}
+          onClick={(e) => {
+            onToggleProp(id, e.currentTarget.dataset.toggle)
+          }}
         >
           <i className="fa fa-dollar-sign" />
         </button>
@@ -62,7 +65,9 @@ const EmployeesListItem = ({
         <button
           type="button"
           className="btn-trash btn-sm "
-          onClick={deleteItem}
+          onClick={() => {
+            onDeleteItem(id)
+          }}
         >
           <i className="fas fa-trash" />
         </button>
