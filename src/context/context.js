@@ -1,5 +1,5 @@
 import { createContext } from 'react'
 
-const SetDataContext = createContext({ onDeleteItem: () => {} })
+const SetDataContext = createContext(() => {})
 
 export default SetDataContext

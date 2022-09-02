@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext, useRef } from 'react'
 
+import SetDataContext from '../../context/context'
 import './employees-add-form.css'
 
-const EmployeesAddForm = ({ onAddItem }) => {
+const EmployeesAddForm = () => {
   const [employee, setEmployee] = useState({ name: '', salary: '' })
   const { name, salary } = employee
+
+  const dispatch = useContext(SetDataContext)
+
+  const nameRef = useRef()
+  const salaryRef = useRef()
 
   const onInputValueChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value })
@@ -12,15 +18,24 @@ const EmployeesAddForm = ({ onAddItem }) => {
 
   const onSubmitForm = (e) => {
     e.preventDefault()
+    nameRef.current.style.border = ''
+    salaryRef.current.style.border = ''
 
-    if (name.length > 2 && salary.length > 2) {
-      onAddItem(name, salary)
+    if (!(name.length > 2)) {
+      nameRef.current.style.border = '3px solid red'
+    }
+    if (!(salary.length > 2)) {
+      salaryRef.current.style.border = '3px solid red'
     }
 
-    setEmployee({
-      name: '',
-      salary: '',
-    })
+    if (name.length > 2 && salary.length > 2) {
+      dispatch({ type: 'add', payload: { name, salary } })
+
+      setEmployee({
+        name: '',
+        salary: '',
+      })
+    }
   }
 
   return (
@@ -28,6 +43,7 @@ const EmployeesAddForm = ({ onAddItem }) => {
       <h3>Добавьте нового сотрудника</h3>
       <form className="add-form d-flex" onSubmit={onSubmitForm}>
         <input
+          ref={nameRef}
           type="text"
           name="name"
           value={name}
@@ -36,6 +52,7 @@ const EmployeesAddForm = ({ onAddItem }) => {
           onChange={onInputValueChange}
         />
         <input
+          ref={salaryRef}
           type="number"
           name="salary"
           value={salary}

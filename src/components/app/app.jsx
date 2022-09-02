@@ -1,61 +1,23 @@
-import { useMemo, useState } from 'react'
-import generateId from '../../services/services'
+import { useState, useReducer } from 'react'
 
 import AppInfo from '../app-info/app-info'
 import SearchPanel from '../search-panel/search-panel'
 import AppFilter from '../app-filter/app-filter'
 import EmployeesList from '../employees-list/employees-list'
-import MemoForm from '../employees-add-form/employees-add-form'
+import EmployeesAddForm from '../employees-add-form/employees-add-form'
 
 import employeesData from '../../server/server'
-import './app.css'
 import SetDataContext from '../../context/context'
+import reducer from '../../reducer/reducer'
+
+import './app.css'
 
 const App = () => {
-  const [data, setData] = useState(employeesData)
+  const [state, dispatch] = useReducer(reducer, { data: employeesData })
+  const { data } = state
+
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('all')
-
-  const onAddItem = (name, salary) => {
-    const newItem = {
-      name,
-      salary: +salary,
-      increase: false,
-      rise: false,
-      id: generateId(),
-    }
-
-    setData((prevData) => [...prevData, newItem])
-  }
-
-  const onDeleteItem = (id) => {
-    setData((prevData) => prevData.filter((item) => item.id !== id))
-  }
-
-  const onToggleProp = (id, prop) => {
-    setData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          return { ...item, [prop]: !item[prop] }
-        }
-        return item
-      })
-    )
-  }
-
-  const onChangeSalary = (id, value) => {
-    setData((prevData) =>
-      prevData.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            salary: value.slice(0, -1).replace(/\D/gi, ''),
-          }
-        }
-        return item
-      })
-    )
-  }
 
   const onUpdateSearch = (activeSearch) => {
     setSearch(activeSearch)
@@ -87,17 +49,11 @@ const App = () => {
     }
   }
 
-  const setDataFn = useMemo(() => ({
-    onDeleteItem,
-    onToggleProp,
-    onChangeSalary,
-  }))
-
   const increaseQuantity = data.filter((item) => item.increase).length
   const visibleData = filterItems(searchItem(data, search), filter)
 
   return (
-    <SetDataContext.Provider value={setDataFn}>
+    <SetDataContext.Provider value={dispatch}>
       <div className="app">
         <AppInfo
           itemsQuantity={data.length}
@@ -109,14 +65,9 @@ const App = () => {
           <AppFilter filter={filter} onUpdateFilter={onUpdateFilter} />
         </div>
 
-        <EmployeesList
-          data={visibleData}
-          onDeleteItem={onDeleteItem}
-          onToggleProp={onToggleProp}
-          onChangeSalary={onChangeSalary}
-        />
+        <EmployeesList data={visibleData} />
 
-        <MemoForm onAddItem={onAddItem} />
+        <EmployeesAddForm />
       </div>
     </SetDataContext.Provider>
   )

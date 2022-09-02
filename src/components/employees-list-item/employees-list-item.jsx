@@ -6,23 +6,37 @@ import './employees-list-item.css'
 import SetDataContext from '../../context/context'
 
 const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
-  const context = useContext(SetDataContext)
-  const { onDeleteItem, onToggleProp, onChangeSalary } = context
+  const dispatch = useContext(SetDataContext)
 
   const salaryInputRef = useRef(null)
 
-  const classNames = clsx('list-group-item d-flex justify-content-between', {
-    increase,
-    like: rise,
-  })
+  const onToggleProp = (e) => {
+    dispatch({
+      type: 'toggleProp',
+      payload: { id, prop: e.currentTarget.dataset.toggle },
+    })
+  }
+
+  const onDeleteItem = () => {
+    dispatch({ type: 'delete', payload: { id } })
+  }
+
+  const onChangeSalary = (e) => {
+    dispatch({ type: 'changeSalary', payload: { id, salary: e.target.value } })
+  }
 
   const spaceHandler = (e) => {
     if (e.code === 'Space') {
       e.preventDefault()
 
-      onToggleProp(id, e.currentTarget.dataset.toggle)
+      onToggleProp(e)
     }
   }
+
+  const classNames = clsx('list-group-item d-flex justify-content-between', {
+    increase,
+    like: rise,
+  })
 
   return (
     <li className={classNames}>
@@ -30,9 +44,7 @@ const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
         data-toggle="rise"
         tabIndex={0}
         className="list-group-item-label"
-        onClick={(e) => {
-          onToggleProp(id, e.currentTarget.dataset.toggle)
-        }}
+        onClick={onToggleProp}
         onKeyDown={spaceHandler}
       >
         {name}
@@ -42,9 +54,7 @@ const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
         type="text"
         className="list-group-item-input"
         value={`${salary}$`}
-        onChange={(e) => {
-          onChangeSalary(id, e.target.value)
-        }}
+        onChange={onChangeSalary}
         onFocus={() => {
           const end = salaryInputRef.current.value.length - 1
           salaryInputRef.current.setSelectionRange(0, end)
@@ -55,9 +65,7 @@ const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
           type="button"
           data-toggle="increase"
           className="btn-cookie btn-sm"
-          onClick={(e) => {
-            onToggleProp(id, e.currentTarget.dataset.toggle)
-          }}
+          onClick={onToggleProp}
         >
           <i className="fa fa-dollar-sign" />
         </button>
@@ -65,9 +73,7 @@ const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
         <button
           type="button"
           className="btn-trash btn-sm "
-          onClick={() => {
-            onDeleteItem(id)
-          }}
+          onClick={onDeleteItem}
         >
           <i className="fas fa-trash" />
         </button>
