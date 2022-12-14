@@ -1,70 +1,72 @@
-import { useState, useContext, useRef } from 'react'
+import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
 
 import SetDataContext from '../../context/context'
+import generateId from '../../services/services'
 import './employees-add-form.css'
 
 const EmployeesAddForm = () => {
-  const [employee, setEmployee] = useState({ name: '', salary: '' })
-  const { name, salary } = employee
-
   const dispatch = useContext(SetDataContext)
 
-  const nameRef = useRef()
-  const salaryRef = useRef()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isSubmitting },
+    reset,
+  } = useForm({ mode: 'onBlur' })
 
-  const onInputValueChange = (e) => {
-    setEmployee({ ...employee, [e.target.name]: e.target.value })
-  }
-
-  const onSubmitForm = (e) => {
-    e.preventDefault()
-    nameRef.current.style.border = ''
-    salaryRef.current.style.border = ''
-
-    if (!(name.length > 2)) {
-      nameRef.current.style.border = '3px solid red'
-    }
-    if (!(salary.length > 2)) {
-      salaryRef.current.style.border = '3px solid red'
+  const onSubmit = ({ name, salary }) => {
+    const newItem = {
+      name,
+      salary,
+      increase: false,
+      rise: false,
+      id: generateId(),
     }
 
-    if (name.length > 2 && salary.length > 2) {
-      dispatch({ type: 'add', payload: { name, salary } })
-
-      setEmployee({
-        name: '',
-        salary: '',
-      })
-    }
+    dispatch({ type: 'add', payload: { newItem } })
+    reset()
   }
 
   return (
     <div className="app-add-form">
-      <h3>Добавьте нового сотрудника</h3>
-      <form className="add-form d-flex" onSubmit={onSubmitForm}>
+      <label htmlFor="name">Добавьте нового сотрудника</label>
+
+      <form className="add-form d-flex" onSubmit={handleSubmit(onSubmit)}>
         <input
-          ref={nameRef}
+          id="name"
+          className="form-control new-post-label"
+          style={{ border: errors?.name ? '3px solid red' : null }}
           type="text"
-          name="name"
-          value={name}
-          className="form-control new-post-label"
           placeholder="Как его зовут?"
-          onChange={onInputValueChange}
-        />
-        <input
-          ref={salaryRef}
-          type="number"
-          name="salary"
-          value={salary}
-          className="form-control new-post-label"
-          placeholder="З/П в $?"
-          onChange={onInputValueChange}
+          {...register('name', {
+            required: 'Укажите имя',
+            minLength: { value: 2, message: 'Минимум 2 символа' },
+          })}
         />
 
-        <button type="submit" className="btn btn-outline-light">
+        <input
+          className="form-control new-post-label"
+          style={{ border: errors?.salary ? '3px solid red' : null }}
+          placeholder="З/П в $?"
+          {...register('salary', {
+            required: 'Укажите зарплату',
+            minLength: { value: 3, message: 'Минимум 3 цифры' },
+          })}
+        />
+
+        <button
+          type="submit"
+          className="btn btn-outline-light"
+          disabled={!isValid || isSubmitting}
+        >
           Добавить
         </button>
       </form>
+      <div className="errors__wrapper">
+        <div>{errors?.name && errors?.name?.message} </div>
+        <div>{errors?.salary && errors?.salary?.message}</div>
+      </div>
     </div>
   )
 }

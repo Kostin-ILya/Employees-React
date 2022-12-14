@@ -7,6 +7,10 @@
   color: #fff;
 }
 
+.app-add-form label {
+  font-size: 2rem;
+}
+
 .add-form {
   margin-top: 20px;
 }
@@ -14,4 +18,20 @@
 .add-form input {
   width: 350px;
   margin-right: 20px;
+}
+
+.add-form button {
+  width: 200px;
+}
+
+.errors__wrapper {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.errors__wrapper div {
+  text-align: center;
+  width: 350px;
+  font-size: 18px;
 }

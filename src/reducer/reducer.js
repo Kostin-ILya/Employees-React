@@ -1,5 +1,3 @@
-import generateId from '../services/services'
-
 const reducer = (state, action) => {
   switch (action.type) {
     case 'delete': {
@@ -8,17 +6,8 @@ const reducer = (state, action) => {
       }
     }
     case 'add': {
-      const { name, salary } = action.payload
-      const newItem = {
-        name,
-        salary: +salary,
-        increase: false,
-        rise: false,
-        id: generateId(),
-      }
-
       return {
-        data: [...state.data, newItem],
+        data: [...state.data, action.payload.newItem],
       }
     }
     case 'toggleProp': {
@@ -41,7 +30,7 @@ const reducer = (state, action) => {
           if (item.id === id) {
             return {
               ...item,
-              salary: +salary.slice(0, -1).replace(/\D/gi, ''),
+              salary: +salary.slice(0, -1),
             }
           }
           return item
