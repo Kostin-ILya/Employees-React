@@ -32,9 +32,8 @@ const App = () => {
       return dataArr
     }
 
-    return dataArr.filter(
-      (item) =>
-        item.name.toLowerCase().indexOf(currentSearch.toLowerCase()) > -1
+    return dataArr.filter((item) =>
+      item.name.toLowerCase().includes(currentSearch.toLowerCase())
     )
   }
 
