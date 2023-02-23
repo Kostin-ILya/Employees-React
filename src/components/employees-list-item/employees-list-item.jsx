@@ -5,7 +5,14 @@ import clsx from 'clsx'
 import './employees-list-item.css'
 import SetDataContext from '../../context/context'
 
-const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
+const EmployeesListItem = ({
+  id,
+  name,
+  salary,
+  increase,
+  rise,
+  onDeleteEmp,
+}) => {
   const dispatch = useContext(SetDataContext)
 
   const salaryInputRef = useRef(null)
@@ -73,7 +80,7 @@ const EmployeesListItem = ({ id, name, salary, increase, rise }) => {
         <button
           type="button"
           className="btn-trash btn-sm "
-          onClick={onDeleteItem}
+          onClick={() => onDeleteEmp(id)}
         >
           <i className="fas fa-trash" />
         </button>

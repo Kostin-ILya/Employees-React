@@ -1,12 +1,16 @@
 import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
-import SetDataContext from '../../context/context'
 import generateId from '../../services/services'
 import './employees-add-form.css'
 
+import { useDispatch } from 'react-redux/es/hooks/useDispatch'
+import { addEmployee } from '../../store/employeesSlice'
+import SetDataContext from '../../context/context'
+
 const EmployeesAddForm = () => {
   const dispatch = useContext(SetDataContext)
+  const dispatch1 = useDispatch()
 
   const {
     register,
@@ -25,6 +29,7 @@ const EmployeesAddForm = () => {
     }
 
     dispatch({ type: 'add', payload: { newItem } })
+    dispatch1(addEmployee(newItem))
     reset()
   }
 

@@ -1,4 +1,5 @@
-import { useState, useReducer } from 'react'
+import { useState, useReducer, useEffect } from 'react'
+import { useDispatch } from 'react-redux/es/exports'
 
 import AppInfo from '../app-info/app-info'
 import SearchPanel from '../search-panel/search-panel'
@@ -10,14 +11,28 @@ import employeesData from '../../server/server'
 import SetDataContext from '../../context/context'
 import reducer from '../../reducer/reducer'
 
+import {
+  getEmployees,
+  deleteEmployee,
+  fetchEmployees,
+} from '../../store/employeesSlice'
+
 import './app.css'
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, { data: employeesData })
+  const [state, dispatch] = useReducer(reducer, {
+    data: employeesData.employess,
+  })
   const { data } = state
 
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('all')
+
+  const dispatch2 = useDispatch()
+
+  useEffect(() => {
+    dispatch2(fetchEmployees())
+  }, [])
 
   const onUpdateSearch = (activeSearch) => {
     setSearch(activeSearch)
@@ -68,6 +83,15 @@ const App = () => {
 
         <EmployeesAddForm />
       </div>
+
+      <button
+        onClick={() => {
+          dispatch2(deleteEmployee('3000b769leg7m679'))
+          console.log(123)
+        }}
+      >
+        32131231
+      </button>
     </SetDataContext.Provider>
   )
 }
