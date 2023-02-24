@@ -1,38 +1,45 @@
-import { useState, useReducer, useEffect } from 'react'
-import { useDispatch } from 'react-redux/es/exports'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux/'
 
 import AppInfo from '../app-info/app-info'
 import SearchPanel from '../search-panel/search-panel'
 import AppFilter from '../app-filter/app-filter'
 import EmployeesList from '../employees-list/employees-list'
 import EmployeesAddForm from '../employees-add-form/employees-add-form'
+import Spinner from '../Spinner/Spinner'
 
-import employeesData from '../../server/server'
 import SetDataContext from '../../context/context'
-import reducer from '../../reducer/reducer'
 
 import {
-  getEmployees,
   deleteEmployee,
   fetchEmployees,
+  // selectAll as selectAllEmployees,
+  filteredEmployees,
 } from '../../store/employeesSlice'
 
 import './app.css'
+import errorImg from '../Spinner/fail.png'
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, {
-    data: employeesData.employess,
-  })
-  const { data } = state
+  // const [state, dispatch] = useReducer(reducer, {
+  //   data: employeesData.employess,
+  // })
+  // const { data } = state
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchEmployees())
+  }, [])
+
+  const employees = useSelector(filteredEmployees)
+
+  const loadingStatus = useSelector(
+    (state) => state.employees.dataLoadingStatus
+  )
 
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState('all')
-
-  const dispatch2 = useDispatch()
-
-  useEffect(() => {
-    dispatch2(fetchEmployees())
-  }, [])
 
   const onUpdateSearch = (activeSearch) => {
     setSearch(activeSearch)
@@ -63,14 +70,24 @@ const App = () => {
     }
   }
 
-  const increaseQuantity = data.filter((item) => item.increase).length
-  const visibleData = filterItems(searchItem(data, search), filter)
+  const increaseQuantity = employees.filter((item) => item.increase).length
+  const visibleData = filterItems(searchItem(employees, search), filter)
+
+  if (loadingStatus === 'loading') return <Spinner />
+  if (loadingStatus === 'error')
+    return (
+      <img
+        style={{ margin: '50vh auto', display: 'block', width: 300 }}
+        src={errorImg}
+        alt="error"
+      />
+    )
 
   return (
     <SetDataContext.Provider value={dispatch}>
       <div className="app">
         <AppInfo
-          itemsQuantity={data.length}
+          itemsQuantity={employees.length}
           increaseQuantity={increaseQuantity}
         />
 
@@ -79,19 +96,10 @@ const App = () => {
           <AppFilter filter={filter} onUpdateFilter={onUpdateFilter} />
         </div>
 
-        <EmployeesList data={visibleData} />
+        <EmployeesList data={employees} />
 
         <EmployeesAddForm />
       </div>
-
-      <button
-        onClick={() => {
-          dispatch2(deleteEmployee('3000b769leg7m679'))
-          console.log(123)
-        }}
-      >
-        32131231
-      </button>
     </SetDataContext.Provider>
   )
 }

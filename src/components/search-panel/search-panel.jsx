@@ -1,6 +1,12 @@
+import { useDispatch, useSelector } from 'react-redux'
+
+import { activeSearchChanged } from '../../store/filtersSlice'
 import './search-panel.css'
 
-const SearchPanel = ({ search, onUpdateSearch }) => {
+const SearchPanel = () => {
+  const dispatch = useDispatch()
+  const search = useSelector((state) => state.filters.activeSearch)
+
   return (
     <input
       type="text"
@@ -8,7 +14,7 @@ const SearchPanel = ({ search, onUpdateSearch }) => {
       placeholder="Найти сотрудника"
       value={search}
       onChange={(e) => {
-        onUpdateSearch(e.target.value)
+        dispatch(activeSearchChanged(e.target.value))
       }}
     />
   )

@@ -5,23 +5,25 @@ const employeesData = {
       salary: 800,
       increase: false,
       rise: false,
-      id: 1,
+      id: '1',
     },
     {
       name: 'Alex Black',
       salary: 1750,
       increase: false,
       rise: false,
-      id: 2,
+      id: '2',
     },
     {
       name: 'Samantha Fox',
       salary: 3000,
       increase: true,
       rise: true,
-      id: 3,
+      id: '3',
     },
   ],
 }
+
+console.log(JSON.stringify(employeesData.employess))
 
 export default employeesData

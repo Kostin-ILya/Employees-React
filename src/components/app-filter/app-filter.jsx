@@ -1,42 +1,40 @@
+import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
-import generateId from '../../services/services'
+
+import { activeFilterChanged } from '../../store/filtersSlice'
 
 import './app-filter.css'
 
-const AppFilter = ({ filter, onUpdateFilter }) => {
-  const btnsData = [
-    { name: 'all', label: 'Все сотрудники' },
-    { name: 'rised', label: ' На повышение' },
-    { name: 'more1000', label: 'З/П больше 1000$' },
-  ]
+const btns = [
+  { name: 'all', label: 'Все сотрудники' },
+  { name: 'rised', label: ' На повышение' },
+  { name: 'more1000', label: 'З/П больше 1000$' },
+]
 
-  const btns = btnsData.map(({ name, label }) => {
-    const active = filter === name
-    const classNames = clsx('btn', {
-      'btn-light': active,
-      'btn-outline-light': !active,
-    })
-
-    return (
-      <button
-        type="button"
-        key={generateId()}
-        name={name}
-        className={classNames}
-      >
-        {label}
-      </button>
-    )
-  })
+const AppFilter = () => {
+  const dispatch = useDispatch()
+  const activeFilter = useSelector((state) => state.filters.activeFilter)
 
   return (
     <div
       className="btn-group"
       onClick={(e) => {
-        onUpdateFilter(e.target.name)
+        dispatch(activeFilterChanged(e.target.name))
       }}
     >
-      {btns}
+      {btns.map(({ name, label }) => (
+        <button
+          type="button"
+          key={name}
+          name={name}
+          className={clsx(
+            'btn',
+            name === activeFilter ? 'btn-light' : 'btn-outline-light'
+          )}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   )
 }

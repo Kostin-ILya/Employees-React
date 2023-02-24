@@ -1,16 +1,12 @@
-import { useContext } from 'react'
+import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
-import generateId from '../../services/services'
 import './employees-add-form.css'
 
-import { useDispatch } from 'react-redux/es/hooks/useDispatch'
 import { addEmployee } from '../../store/employeesSlice'
-import SetDataContext from '../../context/context'
 
 const EmployeesAddForm = () => {
-  const dispatch = useContext(SetDataContext)
-  const dispatch1 = useDispatch()
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -25,11 +21,8 @@ const EmployeesAddForm = () => {
       salary,
       increase: false,
       rise: false,
-      id: generateId(),
     }
-
-    dispatch({ type: 'add', payload: { newItem } })
-    dispatch1(addEmployee(newItem))
+    dispatch(addEmployee(newItem))
     reset()
   }
 
