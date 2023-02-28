@@ -10,8 +10,9 @@ import Spinner from '../Spinner/Spinner'
 
 import { fetchEmployees } from '../../store/employeesSlice'
 
-import './app.css'
 import errorImg from '../Spinner/fail.png'
+
+import styles from './app.module.scss'
 
 const App = () => {
   const loadingStatus = useSelector(
@@ -25,18 +26,12 @@ const App = () => {
 
   if (loadingStatus === 'loading') return <Spinner />
   if (loadingStatus === 'error')
-    return (
-      <img
-        style={{ margin: '50vh auto', display: 'block', width: 300 }}
-        src={errorImg}
-        alt="error"
-      />
-    )
+    return <img className={styles.error} src={errorImg} alt="error" />
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <AppInfo />
-      <div className="search-panel">
+      <div className={styles.searchPanel}>
         <SearchPanel />
         <AppFilter />
       </div>

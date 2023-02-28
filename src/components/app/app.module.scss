@@ -1,8 +1,19 @@
-.search-panel {
+.app {
+  margin: 25px auto;
+  max-width: 1000px;
+}
+
+.searchPanel {
   margin-top: 30px;
   padding: 25px;
   background-color: #3d5a80;
   border-radius: 10px;
   box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.15);
   color: #fff;
+}
+
+.error {
+  display: block;
+  margin: 50vh auto;
+  width: 300px;
 }

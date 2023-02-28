@@ -1,0 +1,37 @@
+.listGroupItem {
+  padding: 15px 20px;
+  border-bottom: 1px solid #3d5a80;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  color: #212529;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  span {
+    line-height: 35px;
+    font-size: 20px;
+    cursor: pointer;
+    min-width: 550px;
+  }
+  input {
+    line-height: 35px;
+    font-size: 20px;
+    text-align: center;
+    border: 0;
+  }
+  button {
+    width: 35px;
+    height: 35px;
+    margin: 3px;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+  .btnCookie {
+    color: #e09f3e;
+  }
+  .btnTrash {
+    color: #e5383b;
+  }
+}

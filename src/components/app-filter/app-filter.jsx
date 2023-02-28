@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import { activeFilterChanged } from '../../store/filtersSlice'
 
-import './app-filter.css'
+import styles from './app-filter.module.scss'
 
 const btns = [
   { name: 'all', label: 'Все сотрудники' },
@@ -17,7 +17,7 @@ const AppFilter = () => {
 
   return (
     <div
-      className="btn-group"
+      className={styles.btnGroup}
       onClick={(e) => {
         dispatch(activeFilterChanged(e.target.name))
       }}

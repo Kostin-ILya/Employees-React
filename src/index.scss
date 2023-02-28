@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.fa-star {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 16px;
+  color: #ffd700;
+  transition: 0.3s all;
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.employees-list-item_listGroupItem__hfoZL {
+  &.rise .fa-star {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  &.increase {
+    .list-group-item-label,
+    .list-group-item-input {
+      color: #e09f3e;
+    }
+    .btn-star {
+      color: #aeaeae;
+    }
+  }
+}
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  opacity: 1;
+  transition: all 300ms ease-in;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: all 300ms ease-in;
+}

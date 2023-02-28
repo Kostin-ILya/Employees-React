@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 import { activeSearchChanged } from '../../store/filtersSlice'
-import './search-panel.css'
 
 const SearchPanel = () => {
   const dispatch = useDispatch()

@@ -17,7 +17,7 @@ const Spinner = () => {
             keyTimes="0;1"
             values="1.1500000000000001;1"
             begin="-0.3s"
-          ></animateTransform>
+          />
         </rect>
       </g>
       <g transform="translate(73.16666666666667,26.833333333333332)">
@@ -30,7 +30,7 @@ const Spinner = () => {
             keyTimes="0;1"
             values="1.1500000000000001;1"
             begin="-0.2s"
-          ></animateTransform>
+          />
         </rect>
       </g>
       <g transform="translate(26.833333333333332,73.16666666666667)">
@@ -43,7 +43,7 @@ const Spinner = () => {
             keyTimes="0;1"
             values="1.1500000000000001;1"
             begin="0s"
-          ></animateTransform>
+          />
         </rect>
       </g>
       <g transform="translate(73.16666666666667,73.16666666666667)">
@@ -56,7 +56,7 @@ const Spinner = () => {
             keyTimes="0;1"
             values="1.1500000000000001;1"
             begin="-0.1s"
-          ></animateTransform>
+          />
         </rect>
       </g>
     </svg>

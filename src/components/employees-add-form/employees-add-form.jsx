@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 
-import './employees-add-form.css'
-
 import { addEmployee } from '../../store/employeesSlice'
+
+import styles from './employees-add-form.module.scss'
 
 const EmployeesAddForm = () => {
   const dispatch = useDispatch()
@@ -27,10 +27,10 @@ const EmployeesAddForm = () => {
   }
 
   return (
-    <div className="app-add-form">
+    <div className={styles.appAddForm}>
       <label htmlFor="name">Добавьте нового сотрудника</label>
 
-      <form className="add-form d-flex" onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.addForm} onSubmit={handleSubmit(onSubmit)}>
         <input
           id="name"
           className="form-control new-post-label"
@@ -61,7 +61,7 @@ const EmployeesAddForm = () => {
           Добавить
         </button>
       </form>
-      <div className="errors__wrapper">
+      <div className={styles.errorsWrapper}>
         <div>{errors?.name && errors?.name?.message} </div>
         <div>{errors?.salary && errors?.salary?.message}</div>
       </div>

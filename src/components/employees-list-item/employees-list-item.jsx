@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import { changeSalary, toggleProp } from '../../store/employeesSlice'
 
-import './employees-list-item.css'
+import styles from './employees-list-item.module.scss'
 
 const EmployeesListItem = ({
   id,
@@ -38,7 +38,7 @@ const EmployeesListItem = ({
 
   return (
     <li
-      className={clsx('list-group-item d-flex justify-content-between', {
+      className={clsx(styles.listGroupItem, {
         increase,
         rise,
       })}
@@ -73,7 +73,7 @@ const EmployeesListItem = ({
         <button
           type="button"
           data-toggle="increase"
-          className="btn-cookie btn-sm"
+          className={`${styles.btnCookie} btn-sm`}
           onClick={(e) => onTogglePropHandler(e, increase)}
         >
           <i className="fa fa-dollar-sign" />
@@ -81,7 +81,7 @@ const EmployeesListItem = ({
 
         <button
           type="button"
-          className="btn-trash btn-sm "
+          className={`${styles.btnTrash} btn-sm`}
           onClick={() => onDeleteEmp(id)}
         >
           <i className="fas fa-trash" />

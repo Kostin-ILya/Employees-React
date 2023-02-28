@@ -1,0 +1,34 @@
+.appAddForm {
+  margin-top: 30px;
+  padding: 25px;
+  background-color: #3d5a80;
+  border-radius: 10px;
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.15);
+  color: #fff;
+  label {
+    font-size: 2rem;
+  }
+}
+
+.addForm {
+  margin-top: 20px;
+  display: flex;
+  input {
+    width: 350px;
+    margin-right: 20px;
+  }
+  button {
+    width: 200px;
+  }
+}
+
+.errorsWrapper {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+  div {
+    text-align: center;
+    width: 350px;
+    font-size: 18px;
+  }
+}

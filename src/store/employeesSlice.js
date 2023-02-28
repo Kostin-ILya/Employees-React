@@ -12,7 +12,7 @@ const employeesAdapter = createEntityAdapter({})
 const fetchEmployees = createAsyncThunk(
   'employess/fetchEmployees',
   async () => {
-    return await toast
+    return toast
       .promise(axios('https://63f64498ab76703b15bbfcf3.mockapi.io/users'), {
         pending: 'Loading of employees...',
         success: 'Employees are loaded',
@@ -26,7 +26,7 @@ const fetchEmployees = createAsyncThunk(
 const addEmployee = createAsyncThunk(
   'employess/addEmployee',
   async (newEmp) => {
-    return await toast
+    return toast
       .promise(
         axios.post('https://63f64498ab76703b15bbfcf3.mockapi.io/users', newEmp),
         {
@@ -42,7 +42,7 @@ const addEmployee = createAsyncThunk(
 const deleteEmployee = createAsyncThunk(
   'employess/deleteEmployee',
   async (id) => {
-    return await toast
+    return toast
       .promise(
         axios.delete(`https://63f64498ab76703b15bbfcf3.mockapi.io/users/${id}`),
         {
