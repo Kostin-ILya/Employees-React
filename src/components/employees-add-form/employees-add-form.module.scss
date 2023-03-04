@@ -32,3 +32,36 @@
     font-size: 18px;
   }
 }
+
+@media (max-width: 767px) {
+  .addForm {
+    input {
+      width: 100%;
+    }
+  }
+  .errorsWrapper {
+    width: 370px;
+    justify-content: center;
+  }
+}
+@media (max-width: 575px) {
+  .appAddForm {
+    text-align: center;
+    padding: 15px;
+    label {
+      font-size: 19px;
+    }
+    input {
+      margin-right: 0;
+    }
+    .addForm {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+    .errorsWrapper {
+      width: auto;
+    }
+  }
+}

@@ -69,7 +69,7 @@ const EmployeesListItem = ({
           )
         }}
       />
-      <div className="d-flex justify-content-center align-items-center">
+      <div className={styles.iconsWrapper}>
         <button
           type="button"
           data-toggle="increase"

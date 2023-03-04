@@ -17,3 +17,27 @@
   margin: 50vh auto;
   width: 300px;
 }
+
+@media (max-width: 1199px) {
+  .app {
+    max-width: 960px;
+  }
+}
+@media (max-width: 991px) {
+  .app {
+    max-width: 720px;
+  }
+}
+@media (max-width: 767px) {
+  .app {
+    max-width: 540px;
+  }
+}
+@media (max-width: 575px) {
+  .app {
+    padding: 10px;
+  }
+  .searchPanel {
+    padding: 15px;
+  }
+}
