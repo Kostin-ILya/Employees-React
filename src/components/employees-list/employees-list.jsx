@@ -16,16 +16,23 @@ const EmployeesList = () => {
     dispatch(deleteEmployee(id))
   }, [])
 
+  const animateClassNames = {
+    enter: styles.itemEnter,
+    enterActive: styles.itemEnterActive,
+    exit: styles.itemExit,
+    exitActive: styles.itemExitActive,
+  }
+
   return (
     <TransitionGroup component="ul" className={styles.list}>
       {employees.length ? (
         employees.map(({ id, ...props }) => (
-          <CSSTransition key={id} timeout={300} classNames="item">
+          <CSSTransition key={id} timeout={300} classNames={animateClassNames}>
             <EmployeesListItem id={id} onDeleteEmp={onDeleteEmp} {...props} />
           </CSSTransition>
         ))
       ) : (
-        <CSSTransition timeout={300} classNames="item">
+        <CSSTransition timeout={300} classNames={animateClassNames}>
           <h2 style={{ textAlign: 'center' }}>No employees found</h2>
         </CSSTransition>
       )}

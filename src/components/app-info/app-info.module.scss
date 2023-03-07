@@ -4,13 +4,23 @@
   border-radius: 10px;
   box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.15);
   color: #fff;
+  h1 {
+    text-align: center;
+
+    text-decoration: underline;
+    text-underline-offset: 7px;
+  }
 }
 
 @media (max-width: 575px) {
+  .appInfo {
+    padding: 15px;
+  }
   h1 {
-    font-size: 23px;
+    font-size: 20px;
+    line-height: 30px;
   }
   h2 {
-    font-size: 20px;
+    font-size: 17px;
   }
 }

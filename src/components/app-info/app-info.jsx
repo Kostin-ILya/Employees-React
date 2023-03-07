@@ -10,8 +10,11 @@ const AppInfo = () => {
   return (
     <div className={styles.appInfo}>
       <h1>Учет сотрудников в компании Microsoft</h1>
-      <h2>Общее количество сотрудников: {employees.length}</h2>
-      <h2>Премию получат: {employees.filter((emp) => emp.increase).length}</h2>
+      <h2>&#10625; Общее количество сотрудников: {employees.length}</h2>
+      <h2>
+        &#10625; Премию получат:{' '}
+        {employees.filter((emp) => emp.increase).length}
+      </h2>
     </div>
   )
 }
