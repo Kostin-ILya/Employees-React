@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { changeSalary, toggleProp } from '../../store/employeesSlice'
 
 import styles from './employees-list-item.module.scss'
-import './employees-list-item.scss'
 
 const EmployeesListItem = ({
   id,
