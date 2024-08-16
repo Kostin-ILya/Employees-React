@@ -13,6 +13,9 @@ const filtersSlice = createSlice({
   },
 })
 
+export const selectActiveSearch = (state) => state.filters.search
+export const selectActiveFilter = (state) => state.filters.filter
+
 export const { activeFilterChanged, activeSearchChanged } = filtersSlice.actions
 
 export default filtersSlice.reducer

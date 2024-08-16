@@ -8,16 +8,14 @@ import EmployeesList from '../employees-list/employees-list'
 import EmployeesAddForm from '../employees-add-form/employees-add-form'
 import Spinner from '../Spinner/Spinner'
 
-import { fetchEmployees } from '../../store/employeesSlice'
+import { fetchEmployees, selectLoadingStatus } from '../../store/employeesSlice'
 
 import errorImg from '../Spinner/fail.png'
 
 import styles from './app.module.scss'
 
 const App = () => {
-  const loadingStatus = useSelector(
-    (state) => state.employees.dataLoadingStatus
-  )
+  const loadingStatus = useSelector(selectLoadingStatus)
   const dispatch = useDispatch()
 
   useEffect(() => {

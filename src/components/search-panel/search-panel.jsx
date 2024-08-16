@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 
-import { activeSearchChanged } from '../../store/filtersSlice'
+import {
+  activeSearchChanged,
+  selectActiveSearch,
+} from '../../store/filtersSlice'
 
 const SearchPanel = () => {
   const dispatch = useDispatch()
-  const search = useSelector((state) => state.filters.activeSearch)
+  const search = useSelector(selectActiveSearch)
 
   return (
     <input

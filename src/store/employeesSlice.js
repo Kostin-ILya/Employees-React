@@ -144,29 +144,24 @@ const employeesSlice = createSlice({
 
 const { selectAll } = employeesAdapter.getSelectors((state) => state.employees)
 
+const selectLoadingStatus = (state) => state.employees.dataLoadingStatus
+
 const filteredEmployees = createSelector(
   selectAll,
   (state) => state.filters.activeFilter,
   (state) => state.filters.activeSearch,
   (employees, filter, search) => {
-    let data = []
-    switch (filter) {
-      case 'rised':
-        data = employees.filter((item) => item.rise)
-        break
-      case 'more1000':
-        data = employees.filter((item) => item.salary > 1000)
-        break
-      default:
-        data = employees
-    }
-    if (search) {
-      data = data.filter((item) =>
-        item.name.toLowerCase().includes(search.toLowerCase())
-      )
-    }
+    const filtered = employees.filter((item) => {
+      if (filter === 'rised') return item.rise
+      if (filter === 'more1000') return item.salary > 1000
+      return true
+    })
 
-    return data
+    return search
+      ? filtered.filter((item) =>
+          item.name.toLowerCase().includes(search.toLowerCase())
+        )
+      : filtered
   }
 )
 
@@ -177,5 +172,6 @@ export {
   filteredEmployees,
   changeSalary,
   toggleProp,
+  selectLoadingStatus,
 }
 export default employeesSlice.reducer

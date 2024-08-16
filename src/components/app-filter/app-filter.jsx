@@ -1,7 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
 import clsx from 'clsx'
 
-import { activeFilterChanged } from '../../store/filtersSlice'
+import {
+  activeFilterChanged,
+  selectActiveFilter,
+} from '../../store/filtersSlice'
 
 import styles from './app-filter.module.scss'
 
@@ -13,7 +16,7 @@ const btns = [
 
 const AppFilter = () => {
   const dispatch = useDispatch()
-  const activeFilter = useSelector((state) => state.filters.activeFilter)
+  const activeFilter = useSelector(selectActiveFilter)
 
   return (
     <div
