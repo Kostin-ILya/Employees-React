@@ -22,7 +22,12 @@ const App = () => {
     dispatch(fetchEmployees())
   }, [])
 
-  if (loadingStatus === 'loading') return <Spinner />
+  if (loadingStatus === 'loading')
+    return (
+      <div className={styles.spinner}>
+        <Spinner />
+      </div>
+    )
   if (loadingStatus === 'error')
     return <img className={styles.error} src={errorImg} alt="error" />
 

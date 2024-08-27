@@ -18,6 +18,13 @@
   width: 300px;
 }
 
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 @media (max-width: 1199px) {
   .app {
     max-width: 960px;
